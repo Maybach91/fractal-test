@@ -1,0 +1,11 @@
+{
+    "title": "alerts",
+    "status": "prototype",
+    "collated": false,
+    "tags": [
+        "cleanup"
+    ],
+    "context": {
+        "content": "I’m the content of alert"
+    }
+}
