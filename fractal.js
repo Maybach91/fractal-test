@@ -47,15 +47,21 @@ const hbs = require('@frctl/handlebars')({
   }
 });
 
-const instance = fractal.components.engine(hbs);
-/// ^^^^^^
 
-
+fractal.components.set('engine', hbs);
 
 // Docs config
-fractal.docs.engine(hbs);
+fractal.docs.set('engine', hbs);
 fractal.docs.set('ext', '.md');
 
+
+const instance1 = fractal.components.engine(hbs);
+/// ^^^^^^
+
+const instance2 = fractal.docs.engine(hbs);
+
+// Not the same instance - possible bug?
+console.log(instance1.handlebars === instance2.handlebars);
 
 // vvvWORKING vvvv
 // const instance = fractal.components.engine();
@@ -63,14 +69,19 @@ fractal.docs.set('ext', '.md');
 // Using handlebars-layouts (https://www.npmjs.com/package/handlebars-layouts)
 
 const layouts = require('handlebars-layouts');
-layouts.register(instance.handlebars);
+layouts.register(instance1.handlebars);
 
 // Using handlebars-helpers (https://github.com/assemble/handlebars-helpers)
 
-const helpers = require('handlebars-helpers');
-helpers({
-  handlebars: instance.handlebars
+const helpers1 = require('handlebars-helpers');
+const helpers2 = require('handlebars-helpers');
+
+helpers1({
+  handlebars: instance1.handlebars
 });
+helpers2({
+  handlebars: instance2.handlebars
+})
 
 
 
